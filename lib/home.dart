@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nirmaya/deptest.dart';
+import 'deptest.dart'; // Make sure to import this file as well
+import 'anxiety_test.dart';
+import 'ocd_test.dart';
+import 'stress_test.dart';
+import 'bipolar_test.dart';
+import 'ptsd_test.dart';
+import 'eating_disorder_test.dart';
+import 'adhd_test.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<Map<String, String>> tests = [
@@ -21,73 +28,50 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Mental Health App'),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // General Information Section
-              const Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Welcome to the Mental Health App',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // General Information Section
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome to the Mental Health App',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Mental health is essential for our overall well-being. Here, you can take various tests to assess your mental health condition. Below are some of the tests you can take:',
-                      style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Mental health is essential for our overall well-being. Here, you can take various tests to assess your mental health condition. Below are some of the tests you can take:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+            // Mental Health Tests Section
+            Expanded(
+              child: ListView.builder(
+                itemCount: tests.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      title: Text(tests[index]['name']!),
+                      onTap: () {
+                        Navigator.pushNamed(context, tests[index]['route']!);
+                      },
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-              // Mental Health Tests Section
-              Expanded(
-                flex: 3,
-                child: ListView.builder(
-                  itemCount: tests.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(tests[index]['name']!),
-                        onTap: () {
-                          Navigator.pushNamed(context, tests[index]['route']!);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-              // Footer Section with Health Line Numbers
-              const Expanded(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Divider(),
-                    Text(
-                      'Health Line Numbers:',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text('Mental Health Helpline: 123-456-7890'),
-                    Text('Suicide Prevention Line: 987-654-3210'),
-                    Text('Emergency Services: 112'),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -99,10 +83,13 @@ void main() {
     home: HomeScreen(),
     routes: {
       '/test/depression': (context) => const DepressionTestScreen(),
+      '/test/anxiety': (context) => const AnxietyTestScreen(),
+      '/test/ocd': (context) => const OCDTestScreen(),
+      '/test/stress': (context) => const StressTestScreen(),
+      '/test/bipolar': (context) => const BipolarTestScreen(),
+      '/test/ptsd': (context) => const PTSDTestScreen(),
+      '/test/eating': (context) => const EatingDisorderTestScreen(),
+      '/test/adhd': (context) => const ADHDTestScreen(),
     },
   ));
 }
-
-
-
-// Similarly, create other test screens (AnxietyTestScreen, OCDTestScreen, etc.)
