@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'deptest.dart'; // Make sure to import this file as well
-import 'anxiety_test.dart';
-import 'ocd_test.dart';
-import 'stress_test.dart';
-import 'bipolar_test.dart';
-import 'ptsd_test.dart';
-import 'eating_disorder_test.dart';
-import 'adhd_test.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<Map<String, String>> tests = [

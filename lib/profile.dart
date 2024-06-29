@@ -41,11 +41,11 @@ class ProfilePage extends StatelessWidget {
             itemBuilder: (context) => [
               PopupMenuItem<int>(
                 value: 0,
-                child: Text('Take Test'),
+                child: Text('Diagnosis Tests'),
               ),
               PopupMenuItem<int>(
                 value: 1,
-                child: Text('Chat with Bot'),
+                child: Text('Chat with Dawn'),
               ),
               PopupMenuItem<int>(
                 value: 2,

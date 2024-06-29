@@ -96,12 +96,12 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mental Health Assistant'),
+        title: const Text('Dawn'),
       ),
       body: DecoratedBox(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/chatbg4.png"), fit: BoxFit.fill)),
+                image: AssetImage("assets/chatbg4.png"), fit: BoxFit.cover)),
         child: Column(
           children: [
             Expanded(
@@ -160,14 +160,16 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                       controller: _messageController,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Type a message...',
-                      ),
+                          border: OutlineInputBorder(),
+                          labelText: 'Type a message...',
+                          labelStyle: TextStyle(
+                              color: Color.fromARGB(255, 14, 43, 86))),
                     ),
                   ),
                   IconButton(
                     onPressed: _handleSendMessage,
                     icon: const Icon(Icons.send),
+                    color: const Color.fromARGB(255, 10, 50, 83),
                   ),
                 ],
               ),
