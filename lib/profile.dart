@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nirmaya/breathingexercise.dart';
 import 'package:nirmaya/chat.dart';
-import 'package:nirmaya/faq.dart';
+import 'package:nirmaya/detect_emotion.dart';
 import 'package:nirmaya/home.dart';
 import 'package:nirmaya/tracker.dart';
 import 'diary_entry.dart';
@@ -50,15 +49,15 @@ class ProfilePage extends StatelessWidget {
               ),
               PopupMenuItem<int>(
                 value: 2,
-                child: Text('FAQs'),
+                child: Text('Guess My Mood'),
               ),
               PopupMenuItem<int>(
                 value: 3,
-                child: Text('Breathing Exercise'),
+                child: Text('Set Notifications'), // New option added
               ),
               PopupMenuItem<int>(
                 value: 4,
-                child: Text('Set Notifications'), // New option added
+                child: Text('Analyze my diary'), // New option added
               ),
             ],
           ),
@@ -143,19 +142,25 @@ class ProfilePage extends StatelessWidget {
         );
         break;
       case 2:
-        break;
-      case 3:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ExerciseSelectionPage()),
+          MaterialPageRoute(builder: (context) => EmotionDetectionPage()),
         );
         break;
-      case 4: // New case for notifications
+      case 3: // New case for notifications
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   TrackerPage()), // Navigate to the notifications page
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  DiaryEntryScreen()), // Navigate to the notifications page
         );
         break;
     }

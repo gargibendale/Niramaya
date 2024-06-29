@@ -104,7 +104,7 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
       body: DecoratedBox(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/dairy_bg.png"), fit: BoxFit.fill)),
+                image: AssetImage("assets/diary_bg.png"), fit: BoxFit.fill)),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
@@ -114,10 +114,14 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                 SizedBox(height: 50),
                 Text(
                   'Today is $_formattedDate',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 58, 0, 0),
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
                 TextField(
+                  style: TextStyle(color: Color.fromARGB(255, 61, 10, 10)),
                   controller: _textController,
                   maxLines: 18,
                   decoration: InputDecoration(
@@ -182,6 +186,7 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                   },
                   child: Text('Copy Report'),
                 ),
+                SizedBox(height: 40),
               ],
             ),
           ),

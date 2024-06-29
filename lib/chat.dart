@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:nirmaya/consts.dart';
+import 'package:nirmaya/twtext.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _ChatPageState extends State<ChatPage> {
       ],
     },
   ];
-  final List<String> _chatHistoryDisplay = [];
+  final List<Map<String, String>> _chatHistoryDisplay = [];
   late GenerativeModel _model;
 
   @override
@@ -59,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
           {'text': message}
         ],
       });
-      _chatHistoryDisplay.add('$message');
+      _chatHistoryDisplay.add({'role': 'user', 'text': message});
     });
 
     try {
@@ -75,7 +76,8 @@ class _ChatPageState extends State<ChatPage> {
             {'text': response.text}
           ],
         });
-        _chatHistoryDisplay.add('${response.text}');
+        _chatHistoryDisplay
+            .add({'role': 'model', 'text': response.text!.trim()});
       });
     } catch (e) {
       setState(() {
@@ -85,7 +87,7 @@ class _ChatPageState extends State<ChatPage> {
             {'text': 'Error: $e'}
           ],
         });
-        _chatHistoryDisplay.add('Error: $e');
+        _chatHistoryDisplay.add({'role': 'model', 'text': 'Error: $e'});
       });
     }
   }
@@ -96,74 +98,82 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: const Text('Mental Health Assistant'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: _chatHistoryDisplay.length,
-              itemBuilder: (context, index) {
-                final message = _chatHistoryDisplay[index];
-                final isUserMessage =
-                    (index % 2 == 0); // Assuming even index is user message
-                return Row(
-                  mainAxisAlignment: isUserMessage
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: isUserMessage ? Colors.blue : Colors.grey,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          child: MarkdownBody(
-                            data: message,
-                            styleSheet: MarkdownStyleSheet(
-                              p: TextStyle(
-                                  color: Colors.black), // Customize text style
-                              strong: TextStyle(
-                                  fontWeight: FontWeight
-                                      .bold), // Customize bold text style
-                              listBullet: TextStyle(
-                                  color: Colors
-                                      .black), // Customize bullet point color
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/chatbg4.png"), fit: BoxFit.fill)),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: _chatHistoryDisplay.length,
+                itemBuilder: (context, index) {
+                  final message = _chatHistoryDisplay[index]['text']!;
+                  final isUserMessage =
+                      _chatHistoryDisplay[index]['role'] == 'user';
+                  return Row(
+                    mainAxisAlignment: isUserMessage
+                        ? MainAxisAlignment.end
+                        : MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              color: isUserMessage
+                                  ? Color.fromRGBO(136, 192, 255, 1)
+                                  : const Color.fromARGB(255, 255, 255, 255),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
                             ),
+                            child: isUserMessage
+                                ? Text(
+                                    message,
+                                    style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 37, 21, 65)),
+                                  )
+                                : TypewriterText(
+                                    text: message,
+                                    textStyle: TextStyle(color: Colors.black),
+                                  ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Type a message...',
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 3, 12, 45),
+                      ),
+                      controller: _messageController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Type a message...',
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  onPressed: _handleSendMessage,
-                  icon: const Icon(Icons.send),
-                ),
-              ],
+                  IconButton(
+                    onPressed: _handleSendMessage,
+                    icon: const Icon(Icons.send),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
