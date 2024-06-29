@@ -104,78 +104,198 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
     },
   ];
 
-  final Map<int, int> answers = {};
+  Map<int, int> selectedOptions = {};
+  bool testTaken = false; // Flag to track if the test has been taken
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfTestTaken(); // Check if the test has been taken before
+  }
+
+  void checkIfTestTaken() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
+        if (docSnapshot.exists && docSnapshot.data()!['ADHDTestScore'] != null) {
+          setState(() {
+            testTaken = true;
+          });
+        }
+      } catch (e) {
+        print('Error checking test status: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ADHD Test'),
-        backgroundColor: Colors.blue,
-      ),
-      body: ListView.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          final question = questions[index];
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  question['question'],
-                  style: TextStyle(fontSize: 18.0),
-                ),
-                ...question['options'].map<Widget>((option) {
-                  return RadioListTile(
-                    title: Text(option['option']),
-                    value: option['points'],
-                    groupValue: answers[index],
-                    onChanged: (value) {
-                      setState(() {
-                        answers[index] = value as int;
-                      });
-                    },
-                  );
-                }).toList(),
-                Divider(),
-              ],
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () async {
-              int totalPoints = answers.values.fold(0, (sum, value) => sum + value);
-              final User? user = FirebaseAuth.instance.currentUser;
-
-              if (user != null) {
-                final userRef = FirebaseFirestore.instance.collection('Users').doc(user.uid);
-
-                // Save the ADHD test result to Firestore
-                await userRef.set({
-                  'adhdTestScore': totalPoints,
-                  'adhdTestAverage': totalPoints / questions.length,
-                  'adhdDiagnosis': totalPoints / questions.length >= 2 ? 'Yes' : 'No',
-                  'recentTestType': 'ADHD',
-                  'recentTestScore': totalPoints,
-                }, SetOptions(merge: true));
-              }
-
-              // Navigate back to the ProfilePage
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfilePage(testName: 'ADHD'),
-                ),
-              );
-            },
-            child: Text('Submit'),
+        title: const Text(
+          'ADHD Test',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
+        backgroundColor: const Color(0xFFFFF8E3),
+      ),
+      backgroundColor: const Color(0xFFF5EEE6),
+      body: testTaken
+          ? Center(
+              child: Text(
+                'You have already taken the ADHD test.',
+                style: TextStyle(fontSize: 18, color: Colors.black), // Changed to black
+                textAlign: TextAlign.center,
+              ),
+            )
+          : ListView.builder(
+              itemCount: questions.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.all(8),
+                  color: Colors.purple.shade100,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Question ${index + 1}: ${questions[index]['question']}',
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          children: List.generate(
+                            questions[index]['options'].length,
+                            (optionIndex) {
+                              return RadioListTile<int>(
+                                title: Text(
+                                  questions[index]['options'][optionIndex]['option'],
+                                  style: const TextStyle(color: Colors.black), // Changed to black
+                                ),
+                                value: questions[index]['options'][optionIndex]['points'],
+                                groupValue: selectedOptions[index],
+                                activeColor: Colors.black,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedOptions[index] = value!;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          int totalScore = 0;
+          selectedOptions.forEach((key, value) {
+            totalScore += value;
+          });
+          String diagnosis;
+          if (totalScore == 0) {
+            diagnosis = 'No ADHD';
+          } else if (totalScore <= 4) {
+            diagnosis = 'Minimal ADHD';
+          } else if (totalScore <= 8) {
+            diagnosis = 'Mild ADHD';
+          } else if (totalScore <= 14) {
+            diagnosis = 'Moderate ADHD';
+          } else if (totalScore <= 20) {
+            diagnosis = 'Moderately severe ADHD';
+          } else {
+            diagnosis = 'Severe ADHD';
+          }
+
+          try {
+            final user = FirebaseAuth.instance.currentUser;
+            if (user != null) {
+              final docRef = FirebaseFirestore.instance.collection('Users').doc(user.uid);
+
+              // Fetch the existing document to preserve other test results
+              final docSnapshot = await docRef.get();
+              Map<String, dynamic>? existingData = docSnapshot.data() as Map<String, dynamic>?;
+
+              // Update the document with ADHD test result while preserving other test results
+              await docRef.set({
+                if (existingData != null) ...existingData, // Spread the existing data if not null
+                'ADHDTestScore': totalScore,
+                'ADHDDiagnosis': diagnosis,
+                'ADHDTestTimestamp': Timestamp.now(),
+              });
+
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Test Result'),
+                    content: Text('Total Score: $totalScore\nDiagnosis: $diagnosis'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(testName: 'ADHD Test'),
+                            ),
+                          );
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Error'),
+                    content: const Text('User not logged in.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          } catch (e) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Error'),
+                  content: Text('Failed to save the result: $e'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Close'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        },
+        child: const Icon(Icons.done),
       ),
     );
   }

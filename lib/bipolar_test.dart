@@ -106,6 +106,29 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
   ];
 
   Map<int, int> selectedOptions = {};
+  bool testTaken = false; // Flag to track if the test has been taken
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfTestTaken(); // Check if the test has been taken before
+  }
+
+  void checkIfTestTaken() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
+        if (docSnapshot.exists && docSnapshot.data()!['bipolarTestScore'] != null) {
+          setState(() {
+            testTaken = true;
+          });
+        }
+      } catch (e) {
+        print('Error checking test status: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +138,15 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-      body: ListView.builder(
+     body: testTaken
+          ? Center(
+              child: Text(
+                'You have already taken the Bipolar test.',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ) 
+            : ListView.builder(
         itemCount: questions.length,
         itemBuilder: (context, index) {
           return Card(
@@ -160,12 +191,27 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
           selectedOptions.forEach((key, value) {
             totalScore += value;
           });
+           String diagnosis;
+                if (totalScore == 0) {
+                  diagnosis = 'No Bipolar';
+                } else if (totalScore <= 4) {
+                  diagnosis = 'Minimal Bipolar';
+                } else if (totalScore <= 8) {
+                  diagnosis = 'Mild Bipolar';
+                } else if (totalScore <= 14) {
+                  diagnosis = 'Moderate Bipolar';
+                } else if (totalScore <= 20) {
+                  diagnosis = 'Moderately severe Bipolar';
+                } else {
+                  diagnosis = 'Severe Bipolar';
+                }
 
           try {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
                 'bipolarTestScore': totalScore,
+                 'bipolarDiagnosis': diagnosis,
                 'timestamp': Timestamp.now(),
               });
 

@@ -296,6 +296,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "flutter_phone_direct_caller",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_phone_direct_caller-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_plugin_android_lifecycle",
       "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.20",
       "packageUri": "lib/",
@@ -794,7 +800,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-06-29T10:24:40.605174Z",
+  "generated": "2024-06-29T20:08:04.960924Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/Users/hp/Downloads/flutter",

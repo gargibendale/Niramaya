@@ -105,6 +105,29 @@ class _StressTestScreenState extends State<StressTestScreen> {
   ];
 
   Map<int, int> selectedOptions = {};
+  bool testTaken = false; // Flag to track if the test has been taken
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfTestTaken(); // Check if the test has been taken before
+  }
+
+  void checkIfTestTaken() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
+        if (docSnapshot.exists && docSnapshot.data()!['StressTestScore'] != null) {
+          setState(() {
+            testTaken = true;
+          });
+        }
+      } catch (e) {
+        print('Error checking test status: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +137,16 @@ class _StressTestScreenState extends State<StressTestScreen> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-      body: ListView.builder(
+      
+       body: testTaken
+          ? Center(
+              child: Text(
+                'You have already taken the stress test.',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ) 
+            : ListView.builder(
         itemCount: questions.length,
         itemBuilder: (context, index) {
           return Card(
@@ -160,6 +192,20 @@ class _StressTestScreenState extends State<StressTestScreen> {
             totalScore += value;
           });
 
+          String diagnosis;
+                if (totalScore == 0) {
+                  diagnosis = 'No Stress';
+                } else if (totalScore <= 4) {
+                  diagnosis = 'Minimal Stress';
+                } else if (totalScore <= 8) {
+                  diagnosis = 'Mild Stress';
+                } else if (totalScore <= 14) {
+                  diagnosis = 'Moderate Stress';
+                } else if (totalScore <= 20) {
+                  diagnosis = 'Moderately severe Stress';
+                } else {
+                  diagnosis = 'Severe Stress';
+                }
           try {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
@@ -174,6 +220,7 @@ class _StressTestScreenState extends State<StressTestScreen> {
 
                 Map<String, dynamic> existingData = snapshot.data() as Map<String, dynamic>;
                 existingData['StressTestScore'] = totalScore;
+                existingData['StressDiagnosis'] = diagnosis;
                 existingData['timestamp'] = Timestamp.now();
 
                 transaction.update(userDocRef, existingData);

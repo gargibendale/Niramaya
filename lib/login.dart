@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nirmaya/reg.dart'; // Ensure this path is correct
+import 'firstpage.dart'; // Add this import
 
 class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -138,8 +139,11 @@ class _LoginScreenState extends State<LoginScreen>
         password: password,
       );
 
-      // Navigate to home screen upon successful login
-      Navigator.pushReplacementNamed(context, '/profile');
+      // Navigate to FirstPage upon successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => FirstPage()),
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -170,132 +174,151 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Stack(
         children: [
-          const SizedBox(),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ScaleTransition(
-                  scale: _fadeAnimation,
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: "Enter Email",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: _obscureText,
-                    decoration: InputDecoration(
-                      labelText: "Enter Password",
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/Login.jpg',
+              fit: BoxFit.cover,
+              color: Colors.white.withOpacity(0.5), // Apply white overlay
+              colorBlendMode: BlendMode.modulate,
+            ),
+          ),
+          // Login Form
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const SizedBox(),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Checkbox(
-                      value: rememberMe,
-                      onChanged: (value) {
-                        setState(() {
-                          rememberMe = value!;
-                        });
-                      },
-                    ),
-                    const Text("Remember Me"),
-                    const Spacer(), // Align the next element to the right
-                    GestureDetector(
-                      onTap: _forgotPassword,
+                    ScaleTransition(
+                      scale: _fadeAnimation,
                       child: const Text(
-                        "Forgot Password?",
+                        "Login",
                         style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Colors.blue,
-                          fontSize: 12,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 20),
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          labelText: "Enter Email",
+                          labelStyle: const TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                        ),
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          labelText: "Enter Password",
+                          labelStyle: const TextStyle(color: Colors.black),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Checkbox(
+                          value: rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              rememberMe = value!;
+                            });
+                          },
+                        ),
+                        const Text("Remember Me"),
+                        const Spacer(), // Align the next element to the right
+                        GestureDetector(
+                          onTap: _forgotPassword,
+                          child: const Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        loginUser(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        );
+                      },
+                      child: const Text("Login"),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    loginUser(
-                      email: emailController.text.trim(),
-                      password: passwordController.text.trim(),
-                    );
-                  },
-                  child: const Text("Login"),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: const Text("Don't have an account?"),
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegistrationScreen(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: const Text("Don't have an account?"),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegistrationScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Colors.black,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
-                    );
-                  },
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

@@ -84,22 +84,21 @@ class ProfilePage extends StatelessWidget {
           print('Fetched user data: $data');
 
           // Fetch anxiety test details
-          int anxietyTestScore = data['anxietyTestScore'] ?? 0;
-          double anxietyTestAvg = data['anxietyTestAverage'] ?? 0.0;
-          String anxietyDiagnosis = data['anxietyDiagnosis'] ?? '';
+          int anxietyTestScore = data['AnxietyTestScore'] ?? 0;
+          String anxietyDiagnosis = data['AnxietyDiagnosis'] ?? '';
 
           // Fetch ADHD test details
-          int adhdTestScore = data['adhdTestScore'] ?? 0;
-          double adhdTestAvg = data['adhdTestAverage'] ?? 0.0;
-          String adhdDiagnosis = data['adhdDiagnosis'] ?? '';
+          int adhdTestScore = data['ADHDTestScore'] ?? 0;
+
+          String adhdDiagnosis = data['ADHDDiagnosis'] ?? '';
 
           // Fetch depression test details
           int depressionTestScore = data['DepressionTestScore'] ?? 0;
-          double depressionTestAverage = data['DepressionTestAverage'] ?? 0.0;
           String depressionDiagnosis = data['depressionDiagnosis'] ?? '';
 
           // Fetch bipolar test details
           int bipolarTestScore = data['bipolarTestScore'] ?? 0;
+          String bipolarDiagnosis = data['bipolarDiagnosis'] ?? '';
           // Add more fields as needed for bipolar test
 
           // Fetch eating disorder test details
@@ -109,12 +108,15 @@ class ProfilePage extends StatelessWidget {
 
           // Fetch OCD test details
           int ocdTestScore = data['OCDTestScore'] ?? 0;
+          String OCDDiagnosis = data['OCDDiagnosis'] ?? '';
 
           // Fetch PTSD test details
           int ptsdTestScore = data['PTSDTestScore'] ?? 0;
+          String ptsddiagnosis = data['PTSDDiagnosis'] ?? '';
 
           // Fetch stress test details
           int stressTestScore = data['StressTestScore'] ?? 0;
+          String stressDiagnosis = data['StressDiagnosis'] ?? '';
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -129,8 +131,7 @@ class ProfilePage extends StatelessWidget {
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
                       buildTestResult(
-                          'Anxiety Test', anxietyTestScore, anxietyDiagnosis,
-                          average: anxietyTestAvg),
+                          'Anxiety Test', anxietyTestScore, anxietyDiagnosis),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -142,8 +143,11 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
-                      buildTestResult('ADHD Test', adhdTestScore, adhdDiagnosis,
-                          average: adhdTestAvg),
+                      buildTestResult(
+                        'ADHD Test',
+                        adhdTestScore,
+                        adhdDiagnosis,
+                      ),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -156,8 +160,7 @@ class ProfilePage extends StatelessWidget {
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
                       buildTestResult('Depression Test', depressionTestScore,
-                          depressionDiagnosis,
-                          average: depressionTestAverage),
+                          depressionDiagnosis),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -169,7 +172,8 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
-                      buildTestResult('Bipolar Test', bipolarTestScore, ''),
+                      buildTestResult(
+                          'Bipolar Test', bipolarTestScore, bipolarDiagnosis),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -195,7 +199,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
-                      buildTestResult('OCD Test', ocdTestScore, ''),
+                      buildTestResult('OCD Test', ocdTestScore, OCDDiagnosis),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -207,7 +211,8 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
-                      buildTestResult('PTSD Test', ptsdTestScore, ''),
+                      buildTestResult(
+                          'PTSD Test', ptsdTestScore, ptsddiagnosis),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -219,7 +224,8 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
-                      buildTestResult('Stress Test', stressTestScore, ''),
+                      buildTestResult(
+                          'Stress Test', stressTestScore, stressDiagnosis),
                     ],
                   ),
               ],

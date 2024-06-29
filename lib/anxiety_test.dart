@@ -105,137 +105,196 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
   ];
 
   Map<int, int> selectedOptions = {};
+  bool testTaken = false; // Flag to track if the test has been taken
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfTestTaken(); // Check if the test has been taken before
+  }
+
+  // Method to check if the user has already taken the test
+  void checkIfTestTaken() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
+        if (docSnapshot.exists && docSnapshot.data()!['AnxietyTestScore'] != null) {
+          setState(() {
+            testTaken = true;
+          });
+        }
+      } catch (e) {
+        print('Error checking test status: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Anxiety Test'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
+        title: const Text(
+          'Anxiety Test',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: const Color(0xFFFFF8E3),
       ),
-      body: ListView.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(8),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Question ${index + 1}: ${questions[index]['question']}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
-                    children: List.generate(
-                      questions[index]['options'].length,
-                      (optionIndex) {
-                        return RadioListTile<int>(
-                          title: Text(questions[index]['options'][optionIndex]['option']),
-                          value: questions[index]['options'][optionIndex]['points'],
-                          groupValue: selectedOptions[index],
-                          onChanged: (value) {
-                            setState(() {
-                              selectedOptions[index] = value!;
-                            });
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
+      backgroundColor: const Color(0xFFF5EEE6),
+      body: testTaken
+          ? Center(
+              child: Text(
+                'You have already taken the anxiety test.',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
               ),
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          int totalScore = 0;
-          selectedOptions.forEach((key, value) {
-            totalScore += value;
-          });
-
-          double averageScore = totalScore / questions.length;
-          String diagnosis = averageScore >= 2 ? 'Yes' : 'No';
-
-          try {
-            final user = FirebaseAuth.instance.currentUser;
-            if (user != null) {
-              await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
-                'anxietyTestScore': totalScore,
-                'anxietyTestAverage': averageScore,
-                'anxietyDiagnosis': diagnosis,
-                'timestamp': Timestamp.now(),
-              });
-
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Test Result'),
-                    content: Text('Total Score: $totalScore\nAverage Score: ${averageScore.toStringAsFixed(2)}\nDiagnosis: $diagnosis'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfilePage(testName: 'Anxiety Test'),
-                            ),
-                          );
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            } else {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('User not logged in.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Close'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
-          } catch (e) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Error'),
-                  content: Text('Failed to save the result: $e'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Close'),
+            )
+          : ListView.builder(
+              itemCount: questions.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.all(8),
+                  color: Colors.purple.shade100,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Question ${index + 1}: ${questions[index]['question']}',
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          children: List.generate(
+                            questions[index]['options'].length,
+                            (optionIndex) {
+                              return RadioListTile<int>(
+                                title: Text(
+                                  questions[index]['options'][optionIndex]['option'],
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                value: questions[index]['options'][optionIndex]['points'],
+                                groupValue: selectedOptions[index],
+                                activeColor: Colors.black,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedOptions[index] = value!;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 );
               },
-            );
-          }
-        },
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: testTaken
+            ? null // Disable FAB if the test has been taken
+            : () async {
+                int totalScore = 0;
+                selectedOptions.forEach((key, value) {
+                  totalScore += value;
+                });
+
+                String diagnosis;
+                if (totalScore == 0) {
+                  diagnosis = 'No anxiety';
+                } else if (totalScore <= 4) {
+                  diagnosis = 'Minimal anxiety';
+                } else if (totalScore <= 8) {
+                  diagnosis = 'Mild anxiety';
+                } else if (totalScore <= 14) {
+                  diagnosis = 'Moderate anxiety';
+                } else if (totalScore <= 20) {
+                  diagnosis = 'Moderately severe anxiety';
+                } else {
+                  diagnosis = 'Severe anxiety';
+                }
+
+                try {
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
+                      'AnxietyTestScore': totalScore,
+                      'AnxietyDiagnosis': diagnosis,
+                      'Timestamp': Timestamp.now(),
+                    });
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Test Result'),
+                          content: Text(
+                              'Total Score: $totalScore\nDiagnosis: $diagnosis'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfilePage(testName: 'Anxiety Test'),
+                                  ),
+                                );
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Error'),
+                          content: const Text('User not logged in.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Close'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                } catch (e) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: Text('Failed to save the result: $e'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Close'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
         child: const Icon(Icons.done),
+        backgroundColor: Colors.purple.shade100,
+        foregroundColor: Colors.black,
       ),
     );
   }

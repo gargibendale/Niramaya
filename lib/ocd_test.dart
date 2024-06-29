@@ -105,6 +105,29 @@ class _OCDTestScreenState extends State<OCDTestScreen> {
   ];
 
   Map<int, int> selectedOptions = {};
+  bool testTaken = false; // Flag to track if the test has been taken
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfTestTaken(); // Check if the test has been taken before
+  }
+
+  void checkIfTestTaken() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
+        if (docSnapshot.exists && docSnapshot.data()!['OCDTestScore'] != null) {
+          setState(() {
+            testTaken = true;
+          });
+        }
+      } catch (e) {
+        print('Error checking test status: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +137,15 @@ class _OCDTestScreenState extends State<OCDTestScreen> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-      body: ListView.builder(
+       body: testTaken
+          ? Center(
+              child: Text(
+                'You have already taken the OCD test.',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ) 
+            : ListView.builder(
         itemCount: questions.length,
         itemBuilder: (context, index) {
           return Card(
@@ -159,6 +190,20 @@ class _OCDTestScreenState extends State<OCDTestScreen> {
           selectedOptions.forEach((key, value) {
             totalScore += value;
           });
+          String diagnosis;
+                if (totalScore == 0) {
+                  diagnosis = 'No OCD';
+                } else if (totalScore <= 4) {
+                  diagnosis = 'Minimal OCD';
+                } else if (totalScore <= 8) {
+                  diagnosis = 'Mild OCD';
+                } else if (totalScore <= 14) {
+                  diagnosis = 'Moderate OCD';
+                } else if (totalScore <= 20) {
+                  diagnosis = 'Moderately severe OCD';
+                } else {
+                  diagnosis = 'Severe OCD';
+                }
 
           try {
             final user = FirebaseAuth.instance.currentUser;
@@ -173,6 +218,7 @@ class _OCDTestScreenState extends State<OCDTestScreen> {
               await docRef.set({
                 if (existingData != null) ...existingData, // Spread the existing data if not null
                 'OCDTestScore': totalScore,
+                 'OCDDiagnosis': diagnosis,
                 'OCDTestTimestamp': Timestamp.now(),
               });
 
@@ -181,7 +227,7 @@ class _OCDTestScreenState extends State<OCDTestScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Test Result'),
-                    content: Text('Total Score: $totalScore'),
+                    content: Text('Total Score: $totalScore\nDiagnosis: $diagnosis'),
                     actions: [
                       TextButton(
                         onPressed: () {
