@@ -237,10 +237,6 @@ class _DetectEmotionState extends State<DetectEmotion> {
                     )
                   : Container(),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Pick Image from Gallery'),
-              ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _calculateAverageMood,
