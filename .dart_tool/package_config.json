@@ -356,6 +356,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "fluttertoast",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "google_generative_ai",
       "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/google_generative_ai-0.4.3",
       "packageUri": "lib/",
@@ -608,6 +614,48 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "shared_preferences",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "shared_preferences_android",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "shared_preferences_foundation",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_foundation-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "shared_preferences_linux",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_linux-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_platform_interface-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "shared_preferences_web",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_web-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "shared_preferences_windows",
+      "rootUri": "file:///C:/Users/hp/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_windows-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///C:/Users/hp/Downloads/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -800,7 +848,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-06-29T20:08:04.960924Z",
+  "generated": "2024-06-30T03:01:47.509382Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/Users/hp/Downloads/flutter",

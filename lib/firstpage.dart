@@ -3,6 +3,7 @@ import 'secondpage.dart';
 import 'thirdpage.dart';
 
 class FirstPage extends StatefulWidget {
+  const FirstPage({super.key});
   @override
   _FirstPageState createState() => _FirstPageState();
 }

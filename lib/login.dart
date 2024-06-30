@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nirmaya/reg.dart'; // Ensure this path is correct
 import 'firstpage.dart'; // Add this import
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -129,22 +131,30 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
-  Future<void> loginUser({
+  loginUser({
     required String email,
     required String password,
-  }) async {
+  }) {
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      final credential = FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: email,
         password: password,
-      );
-
-      // Navigate to FirstPage upon successful login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => FirstPage()),
-      );
-
+      )
+          .then((value) async {
+        Fluttertoast.showToast(msg: "Login Successful");
+        // Obtain shared preferences.
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString(
+          "userID",
+          value.user?.uid ?? " ",
+        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => FirstPage()),
+            (route) => false);
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Logged in successfully!'),
