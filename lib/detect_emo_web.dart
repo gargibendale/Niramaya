@@ -112,7 +112,7 @@ class _DetectEmotionState extends State<DetectEmotion> {
     try {
       final response = await http.post(
         Uri.parse(
-            'https://5016-2401-4900-7c6a-3aa1-9856-e899-4358-332a.ngrok-free.app/api/detect_emotion/'),
+            'https://tightly-daring-killdeer.ngrok-free.app/api/detect_emotion/'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'image': base64String, 'emotion': emotion}),
       );
