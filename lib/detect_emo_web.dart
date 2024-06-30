@@ -24,7 +24,7 @@ class _DetectEmotionState extends State<DetectEmotion> {
     },
     {
       'emotion': 'happy',
-      'question': 'You see a funny animal video online and laugh out loud. '
+      'question': 'Your friend sends you a funny animal video online '
     },
     {
       'emotion': 'happy',
