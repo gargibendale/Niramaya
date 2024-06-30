@@ -1,4 +1,4 @@
-# nirmaya
+# niramaya
 
 A new Flutter project.
 
