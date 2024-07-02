@@ -13,7 +13,8 @@ class DepressionTestScreen extends StatefulWidget {
 class _DepressionTestScreenState extends State<DepressionTestScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'Over the past 2 weeks, have you felt persistently sad, hopeless, or irritable for most of the day?',
+      'question':
+          'Over the past 2 weeks, have you felt persistently sad, hopeless, or irritable for most of the day?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -22,7 +23,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Did you experience a significant loss of interest or pleasure in most activities you used to enjoy?',
+      'question':
+          'Did you experience a significant loss of interest or pleasure in most activities you used to enjoy?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +33,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Have you had significant changes in appetite or weight (either weight loss or gain) without trying?',
+      'question':
+          'Have you had significant changes in appetite or weight (either weight loss or gain) without trying?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -40,7 +43,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Have you experienced trouble sleeping (insomnia) or sleeping too much (hypersomnia) nearly every day?',
+      'question':
+          'Have you experienced trouble sleeping (insomnia) or sleeping too much (hypersomnia) nearly every day?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -49,7 +53,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Do you feel restless or fidgety, or are you slowed down and have difficulty moving or speaking?',
+      'question':
+          'Do you feel restless or fidgety, or are you slowed down and have difficulty moving or speaking?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +72,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'During this period, have you experienced feelings of worthlessness or excessive guilt, even over trivial matters?',
+      'question':
+          'During this period, have you experienced feelings of worthlessness or excessive guilt, even over trivial matters?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -76,7 +82,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Do you have difficulty concentrating on tasks or making decisions nearly every day?',
+      'question':
+          'Do you have difficulty concentrating on tasks or making decisions nearly every day?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -85,7 +92,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Over the past 2 weeks, have you felt a general sense of hopelessness or helplessness about the future, even for small things?',
+      'question':
+          'Over the past 2 weeks, have you felt a general sense of hopelessness or helplessness about the future, even for small things?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -94,7 +102,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
       ],
     },
     {
-      'question': 'Have you felt that your depression has significantly interfered with your work, social life, or other important areas of functioning?',
+      'question':
+          'Have you felt that your depression has significantly interfered with your work, social life, or other important areas of functioning?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -119,8 +128,12 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['DepressionTestType'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['DepressionTestType'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -135,59 +148,69 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Depression Test', style: TextStyle(color: Color(0xFFF3D7CA))),
+        title: const Text('Depression Test',
+            style: TextStyle(color: Color(0xFFF3D7CA))),
         centerTitle: true,
         backgroundColor: Color(0xFFFFF8E3),
       ),
       body: Container(
-        color: Color(0xFFF5EEE6),
+        color: Color.fromARGB(255, 27, 27, 27),
         child: testTaken
-          ? Center(
-              child: Text(
-                'You have already taken the depression test.',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            )
-          : ListView.builder(
-              itemCount: questions.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  margin: const EdgeInsets.all(8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Question ${index + 1}: ${questions[index]['question']}',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFE6A4B4)),
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          children: List.generate(
-                            questions[index]['options'].length,
-                            (optionIndex) {
-                              return RadioListTile<int>(
-                                title: Text(questions[index]['options'][optionIndex]['option'], style: const TextStyle(color: Colors.black)),
-                                value: questions[index]['options'][optionIndex]['points'],
-                                groupValue: selectedOptions[index],
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedOptions[index] = value!;
-                                  });
-                                },
-                              );
-                            },
+            ? Center(
+                child: Text(
+                  'You have already taken the depression test.',
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              )
+            : ListView.builder(
+                itemCount: questions.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.all(8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Question ${index + 1}: ${questions[index]['question']}',
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFE6A4B4)),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          Column(
+                            children: List.generate(
+                              questions[index]['options'].length,
+                              (optionIndex) {
+                                return RadioListTile<int>(
+                                  title: Text(
+                                      questions[index]['options'][optionIndex]
+                                          ['option'],
+                                      style: const TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 227, 227, 227))),
+                                  value: questions[index]['options']
+                                      [optionIndex]['points'],
+                                  groupValue: selectedOptions[index],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOptions[index] = value!;
+                                    });
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: testTaken
@@ -218,8 +241,12 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
                 try {
                   final user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
-                    await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
-                      'DepressionTestType': 'Depression Test', // Set the recent test type
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(user.uid)
+                        .update({
+                      'DepressionTestType':
+                          'Depression Test', // Set the recent test type
                       'DepressionTestScore': totalScore,
                       'DepressionTestAverage': averageScore,
                       'depressionDiagnosis': diagnosis,
@@ -240,7 +267,8 @@ class _DepressionTestScreenState extends State<DepressionTestScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfilePage(testName: 'Depression Test'),
+                                    builder: (context) => ProfilePage(
+                                        testName: 'Depression Test'),
                                   ),
                                 );
                               },

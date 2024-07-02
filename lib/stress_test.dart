@@ -22,7 +22,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you experience frequent feelings of sadness, hopelessness, or low mood?',
+      'question':
+          'Do you experience frequent feelings of sadness, hopelessness, or low mood?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +32,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you have difficulty concentrating or making decisions due to feeling stressed?',
+      'question':
+          'Do you have difficulty concentrating or making decisions due to feeling stressed?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -40,7 +42,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you experience headaches, muscle tension, or stomachaches more frequently when stressed?',
+      'question':
+          'Do you experience headaches, muscle tension, or stomachaches more frequently when stressed?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -49,7 +52,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you have trouble sleeping or staying asleep due to stress?',
+      'question':
+          'Do you have trouble sleeping or staying asleep due to stress?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -58,7 +62,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you notice changes in your appetite (increased or decreased) when stressed?',
+      'question':
+          'Do you notice changes in your appetite (increased or decreased) when stressed?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +72,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you find yourself using unhealthy coping mechanisms like smoking, drinking, or overeating to deal with stress?',
+      'question':
+          'Do you find yourself using unhealthy coping mechanisms like smoking, drinking, or overeating to deal with stress?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -76,7 +82,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you isolate yourself from social activities or withdraw from loved ones when stressed?',
+      'question':
+          'Do you isolate yourself from social activities or withdraw from loved ones when stressed?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -85,7 +92,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you have difficulty relaxing or taking time for yourself due to feeling constantly on edge?',
+      'question':
+          'Do you have difficulty relaxing or taking time for yourself due to feeling constantly on edge?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -94,7 +102,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
       ],
     },
     {
-      'question': 'Do you find yourself procrastinating on tasks or neglecting responsibilities due to feeling overwhelmed?',
+      'question':
+          'Do you find yourself procrastinating on tasks or neglecting responsibilities due to feeling overwhelmed?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -117,8 +126,12 @@ class _StressTestScreenState extends State<StressTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['StressTestScore'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['StressTestScore'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -137,54 +150,58 @@ class _StressTestScreenState extends State<StressTestScreen> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-      
-       body: testTaken
+      body: testTaken
           ? Center(
               child: Text(
                 'You have already taken the stress test.',
                 style: TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-            ) 
-            : ListView.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(8),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Question ${index + 1}: ${questions[index]['question']}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
-                    children: List.generate(
-                      questions[index]['options'].length,
-                      (optionIndex) {
-                        return RadioListTile<int>(
-                          title: Text(questions[index]['options'][optionIndex]['option']),
-                          value: questions[index]['options'][optionIndex]['points'],
-                          groupValue: selectedOptions[index],
-                          onChanged: (value) {
-                            setState(() {
-                              selectedOptions[index] = value!;
-                            });
-                          },
-                        );
-                      },
+            )
+          : ListView.builder(
+              itemCount: questions.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Question ${index + 1}: ${questions[index]['question']}',
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          children: List.generate(
+                            questions[index]['options'].length,
+                            (optionIndex) {
+                              return RadioListTile<int>(
+                                title: Text(questions[index]['options']
+                                    [optionIndex]['option']),
+                                value: questions[index]['options'][optionIndex]
+                                    ['points'],
+                                groupValue: selectedOptions[index],
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedOptions[index] = value!;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           int totalScore = 0;
@@ -193,32 +210,35 @@ class _StressTestScreenState extends State<StressTestScreen> {
           });
 
           String diagnosis;
-                if (totalScore == 0) {
-                  diagnosis = 'No Stress';
-                } else if (totalScore <= 4) {
-                  diagnosis = 'Minimal Stress';
-                } else if (totalScore <= 8) {
-                  diagnosis = 'Mild Stress';
-                } else if (totalScore <= 14) {
-                  diagnosis = 'Moderate Stress';
-                } else if (totalScore <= 20) {
-                  diagnosis = 'Moderately severe Stress';
-                } else {
-                  diagnosis = 'Severe Stress';
-                }
+          if (totalScore == 0) {
+            diagnosis = 'No Stress';
+          } else if (totalScore <= 4) {
+            diagnosis = 'Minimal Stress';
+          } else if (totalScore <= 8) {
+            diagnosis = 'Mild Stress';
+          } else if (totalScore <= 14) {
+            diagnosis = 'Moderate Stress';
+          } else if (totalScore <= 20) {
+            diagnosis = 'Moderately severe Stress';
+          } else {
+            diagnosis = 'Severe Stress';
+          }
           try {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
-              DocumentReference userDocRef = FirebaseFirestore.instance.collection('Users').doc(user.uid);
+              DocumentReference userDocRef =
+                  FirebaseFirestore.instance.collection('Users').doc(user.uid);
 
-              await FirebaseFirestore.instance.runTransaction((transaction) async {
+              await FirebaseFirestore.instance
+                  .runTransaction((transaction) async {
                 DocumentSnapshot snapshot = await transaction.get(userDocRef);
 
                 if (!snapshot.exists) {
                   throw Exception("User document does not exist!");
                 }
 
-                Map<String, dynamic> existingData = snapshot.data() as Map<String, dynamic>;
+                Map<String, dynamic> existingData =
+                    snapshot.data() as Map<String, dynamic>;
                 existingData['StressTestScore'] = totalScore;
                 existingData['StressDiagnosis'] = diagnosis;
                 existingData['timestamp'] = Timestamp.now();
@@ -239,7 +259,8 @@ class _StressTestScreenState extends State<StressTestScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProfilePage(testName: 'Stress Test'),
+                              builder: (context) =>
+                                  ProfilePage(testName: 'Stress Test'),
                             ),
                           );
                         },

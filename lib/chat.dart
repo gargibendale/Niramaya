@@ -99,9 +99,9 @@ class _ChatPageState extends State<ChatPage> {
         title: const Text('Dawn'),
       ),
       body: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/chatbg4.png"), fit: BoxFit.cover)),
+                image: AssetImage("assets/chatbg6.jpg"), fit: BoxFit.cover)),
         child: Column(
           children: [
             Expanded(
@@ -156,7 +156,7 @@ class _ChatPageState extends State<ChatPage> {
                   Expanded(
                     child: TextFormField(
                       style: TextStyle(
-                        color: Color.fromARGB(255, 3, 12, 45),
+                        color: Color.fromARGB(255, 247, 249, 255),
                       ),
                       controller: _messageController,
                       decoration: const InputDecoration(

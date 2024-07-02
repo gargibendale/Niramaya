@@ -7,13 +7,15 @@ class EatingDisorderTestScreen extends StatefulWidget {
   const EatingDisorderTestScreen({super.key});
 
   @override
-  _EatingDisorderTestScreenState createState() => _EatingDisorderTestScreenState();
+  _EatingDisorderTestScreenState createState() =>
+      _EatingDisorderTestScreenState();
 }
 
 class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'Do you find yourself preoccupied with food or weight loss most of the time, even when you\'re not eating?',
+      'question':
+          'Do you find yourself preoccupied with food or weight loss most of the time, even when you\'re not eating?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -22,7 +24,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you often skip meals or restrict your food intake even when you\'re feeling hungry?',
+      'question':
+          'Do you often skip meals or restrict your food intake even when you\'re feeling hungry?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +34,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you purge after eating through methods like vomiting, laxatives, or excessive exercise to avoid weight gain?',
+      'question':
+          'Do you purge after eating through methods like vomiting, laxatives, or excessive exercise to avoid weight gain?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -40,7 +44,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you eat large amounts of food in a short period of time (binge eating) even when you\'re not hungry, followed by feelings of guilt or shame?',
+      'question':
+          'Do you eat large amounts of food in a short period of time (binge eating) even when you\'re not hungry, followed by feelings of guilt or shame?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -49,7 +54,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you see yourself as overweight or fat even when you\'re objectively underweight?',
+      'question':
+          'Do you see yourself as overweight or fat even when you\'re objectively underweight?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -58,7 +64,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Is your self-worth heavily influenced by your weight or body shape?',
+      'question':
+          'Is your self-worth heavily influenced by your weight or body shape?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +74,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you constantly feel the need to control your weight and food intake?',
+      'question':
+          'Do you constantly feel the need to control your weight and food intake?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -76,7 +84,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you use food or restricting food intake as a way to cope with stress or difficult emotions?',
+      'question':
+          'Do you use food or restricting food intake as a way to cope with stress or difficult emotions?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -85,7 +94,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Do you isolate yourself from social activities or avoid eating in public due to anxiety about your food choices or body image?',
+      'question':
+          'Do you isolate yourself from social activities or avoid eating in public due to anxiety about your food choices or body image?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -94,7 +104,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
       ],
     },
     {
-      'question': 'Have you noticed changes in your health, such as fatigue, hair loss, or irregular periods, but avoid seeking medical help due to fear of weight gain?',
+      'question':
+          'Have you noticed changes in your health, such as fatigue, hair loss, or irregular periods, but avoid seeking medical help due to fear of weight gain?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -119,8 +130,12 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['eatingDisorderTestScore'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['eatingDisorderTestScore'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -160,7 +175,10 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
                       children: [
                         Text(
                           'Question ${index + 1}: ${questions[index]['question']}',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.pink),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.pink),
                         ),
                         const SizedBox(height: 10),
                         Column(
@@ -168,8 +186,10 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
                             questions[index]['options'].length,
                             (optionIndex) {
                               return RadioListTile<int>(
-                                title: Text(questions[index]['options'][optionIndex]['option']),
-                                value: questions[index]['options'][optionIndex]['points'],
+                                title: Text(questions[index]['options']
+                                    [optionIndex]['option']),
+                                value: questions[index]['options'][optionIndex]
+                                    ['points'],
                                 groupValue: selectedOptions[index],
                                 onChanged: (value) {
                                   setState(() {
@@ -213,18 +233,21 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
                 try {
                   final user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
-                    final docRef = FirebaseFirestore.instance.collection('Users').doc(user.uid);
+                    final docRef = FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(user.uid);
 
                     // Fetch the existing document to preserve other test results
                     final docSnapshot = await docRef.get();
-                    Map<String, dynamic>? existingData = docSnapshot.data() as Map<String, dynamic>?;
+                    Map<String, dynamic>? existingData =
+                        docSnapshot.data() as Map<String, dynamic>?;
 
                     // Update the document with eating disorder test result while preserving other test results
                     await docRef.set({
-                      if (existingData != null) ...existingData, // Spread the existing data if not null
+                      if (existingData != null)
+                        ...existingData, // Spread the existing data if not null
                       'eatingDisorderTestScore': totalScore,
                       'eatingDisorderDiagnosis': diagnosis,
-                      
                     });
 
                     showDialog(
@@ -232,7 +255,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Test Result'),
-                          content: Text('Total Score: $totalScore\nDiagnosis: $diagnosis'),
+                          content: Text(
+                              'Total Score: $totalScore\nDiagnosis: $diagnosis'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -240,7 +264,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfilePage(testName: 'Eating Disorder Test'),
+                                    builder: (context) => ProfilePage(
+                                        testName: 'Eating Disorder Test'),
                                   ),
                                 );
                               },
@@ -252,7 +277,8 @@ class _EatingDisorderTestScreenState extends State<EatingDisorderTestScreen> {
                     );
 
                     setState(() {
-                      testTaken = true; // Update the flag to indicate the test has been taken
+                      testTaken =
+                          true; // Update the flag to indicate the test has been taken
                     });
                   } else {
                     showDialog(

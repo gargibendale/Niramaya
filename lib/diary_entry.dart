@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:nirmaya/consts.dart';
+import 'package:nirmaya/home.dart';
 
 class DiaryEntryScreen extends StatefulWidget {
   @override
@@ -98,13 +99,28 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
     });
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Diary Entry'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Container()),
+            );
+          },
+        ),
+      ),
       body: DecoratedBox(
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/diary_bg.png"), fit: BoxFit.fill)),
+          image: DecorationImage(
+            image: AssetImage("assets/diary_bg.png"), 
+            fit: BoxFit.fill
+          )
+        ),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
@@ -115,9 +131,10 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                 Text(
                   'Today is $_formattedDate',
                   style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 58, 0, 0),
-                      fontWeight: FontWeight.bold),
+                    fontSize: 18,
+                    color: Color.fromARGB(255, 58, 0, 0),
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
                 SizedBox(height: 20),
                 TextField(
@@ -132,7 +149,6 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Save diary entry logic here
                     _saveEntry();
                   },
                   child: Text('Generate Report'),
@@ -150,7 +166,7 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(
-                                      255, 82, 33, 33), // Change the color here
+                                      255, 82, 33, 33),
                                 ),
                               );
                             } else if (line.startsWith('*')) {
@@ -160,7 +176,7 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: const Color.fromARGB(255, 111, 111,
-                                      111), // Change the color here
+                                      111),
                                 ),
                               );
                             } else {
@@ -168,7 +184,7 @@ class _DiaryEntryScreenState extends State<DiaryEntryScreen> {
                                 text: line + '\n',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: Colors.black, // Change the color here
+                                  color: Colors.black,
                                 ),
                               );
                             }

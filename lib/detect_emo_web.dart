@@ -24,7 +24,7 @@ class _DetectEmotionState extends State<DetectEmotion> {
     },
     {
       'emotion': 'happy',
-      'question': 'Your friend sends you a funny animal video online '
+      'question': 'You see a funny animal video online and laugh out loud. '
     },
     {
       'emotion': 'happy',
@@ -130,7 +130,7 @@ class _DetectEmotionState extends State<DetectEmotion> {
         });
       }
     } catch (e) {
-      print('Error: $e');
+      print('THE ERROR IS THIS: $e');
       setState(() {
         recognizedEmo = 'Error capturing image';
       });

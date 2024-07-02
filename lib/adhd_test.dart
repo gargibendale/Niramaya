@@ -13,7 +13,8 @@ class ADHDTestScreen extends StatefulWidget {
 class _ADHDTestScreenState extends State<ADHDTestScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'Over the past 2 weeks, have you often found your mind drifting off or daydreaming during lectures, conversations, or while reading?',
+      'question':
+          'Over the past 2 weeks, have you often found your mind drifting off or daydreaming during lectures, conversations, or while reading?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -22,7 +23,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Have you often struggled to complete or hand in schoolwork, chores, or other workplace tasks on time due to forgetfulness or difficulty staying focused?',
+      'question':
+          'Have you often struggled to complete or hand in schoolwork, chores, or other workplace tasks on time due to forgetfulness or difficulty staying focused?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +33,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Do you frequently lose track of conversations, appointments, or objects you need (e.g., keys, phone, wallet)?',
+      'question':
+          'Do you frequently lose track of conversations, appointments, or objects you need (e.g., keys, phone, wallet)?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -40,7 +43,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Do you often have difficulty following instructions or finishing tasks that require sustained mental effort?',
+      'question':
+          'Do you often have difficulty following instructions or finishing tasks that require sustained mental effort?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -49,7 +53,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Over the past 2 weeks, have you often felt restless or fidgety, unable to sit still for extended periods?',
+      'question':
+          'Over the past 2 weeks, have you often felt restless or fidgety, unable to sit still for extended periods?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -58,7 +63,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Do you often blurt out answers before someone finishes asking a question, or interrupt conversations?',
+      'question':
+          'Do you often blurt out answers before someone finishes asking a question, or interrupt conversations?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +73,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Do you often feel a sense of urgency or like you need to be doing something, even when relaxing?',
+      'question':
+          'Do you often feel a sense of urgency or like you need to be doing something, even when relaxing?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -76,7 +83,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Have you found it challenging to organize tasks or activities, often underestimating the time required to complete them?',
+      'question':
+          'Have you found it challenging to organize tasks or activities, often underestimating the time required to complete them?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -85,7 +93,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Over the past 2 weeks, have you had trouble waiting your turn in situations such as lines or group activities?',
+      'question':
+          'Over the past 2 weeks, have you had trouble waiting your turn in situations such as lines or group activities?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -94,7 +103,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
       ],
     },
     {
-      'question': 'Do you frequently start new tasks before finishing the ones you already began?',
+      'question':
+          'Do you frequently start new tasks before finishing the ones you already began?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -117,8 +127,12 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['ADHDTestScore'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['ADHDTestScore'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -147,7 +161,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
           ? Center(
               child: Text(
                 'You have already taken the ADHD test.',
-                style: TextStyle(fontSize: 18, color: Colors.black), // Changed to black
+                style: TextStyle(
+                    fontSize: 18, color: Colors.black), // Changed to black
                 textAlign: TextAlign.center,
               ),
             )
@@ -165,7 +180,10 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
                       children: [
                         Text(
                           'Question ${index + 1}: ${questions[index]['question']}',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         const SizedBox(height: 10),
                         Column(
@@ -174,10 +192,13 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
                             (optionIndex) {
                               return RadioListTile<int>(
                                 title: Text(
-                                  questions[index]['options'][optionIndex]['option'],
-                                  style: const TextStyle(color: Colors.black), // Changed to black
+                                  questions[index]['options'][optionIndex]
+                                      ['option'],
+                                  style: const TextStyle(
+                                      color: Colors.black), // Changed to black
                                 ),
-                                value: questions[index]['options'][optionIndex]['points'],
+                                value: questions[index]['options'][optionIndex]
+                                    ['points'],
                                 groupValue: selectedOptions[index],
                                 activeColor: Colors.black,
                                 onChanged: (value) {
@@ -219,15 +240,18 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
           try {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
-              final docRef = FirebaseFirestore.instance.collection('Users').doc(user.uid);
+              final docRef =
+                  FirebaseFirestore.instance.collection('Users').doc(user.uid);
 
               // Fetch the existing document to preserve other test results
               final docSnapshot = await docRef.get();
-              Map<String, dynamic>? existingData = docSnapshot.data() as Map<String, dynamic>?;
+              Map<String, dynamic>? existingData =
+                  docSnapshot.data() as Map<String, dynamic>?;
 
               // Update the document with ADHD test result while preserving other test results
               await docRef.set({
-                if (existingData != null) ...existingData, // Spread the existing data if not null
+                if (existingData != null)
+                  ...existingData, // Spread the existing data if not null
                 'ADHDTestScore': totalScore,
                 'ADHDDiagnosis': diagnosis,
                 'ADHDTestTimestamp': Timestamp.now(),
@@ -238,7 +262,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Test Result'),
-                    content: Text('Total Score: $totalScore\nDiagnosis: $diagnosis'),
+                    content:
+                        Text('Total Score: $totalScore\nDiagnosis: $diagnosis'),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -246,7 +271,8 @@ class _ADHDTestScreenState extends State<ADHDTestScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProfilePage(testName: 'ADHD Test'),
+                              builder: (context) =>
+                                  ProfilePage(testName: 'ADHD Test'),
                             ),
                           );
                         },

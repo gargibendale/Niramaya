@@ -88,11 +88,17 @@ flutter:
     - assets/chatbg2.png
     - assets/chatbg3.png
     - assets/chatbg4.png
+    - assets/chatbg6.jpg
+    - assets/chatbg7.jpg
     - assets/Login.jpg
     - assets/home.jpg
     - assets/firstpage.jpg
     - assets/secondpage.png
     - assets/thirdpage.png
+    - assets/geminichat.png
+    - assets/profile.png
+    - assets/reg.png
+    - assets/second.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

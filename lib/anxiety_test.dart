@@ -13,7 +13,8 @@ class AnxietyTestScreen extends StatefulWidget {
 class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'Over the last 2 weeks, how often have you felt nervous, anxious, or on edge?',
+      'question':
+          'Over the last 2 weeks, how often have you felt nervous, anxious, or on edge?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -22,7 +23,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, how often have you been unable to stop or control worrying?',
+      'question':
+          'Over the last 2 weeks, how often have you been unable to stop or control worrying?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +33,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you felt restless or on edge, unable to relax?',
+      'question':
+          'Over the last 2 weeks, have you felt restless or on edge, unable to relax?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'A little', 'points': 1},
@@ -40,7 +43,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you been easily tired or fatigued?',
+      'question':
+          'Over the last 2 weeks, have you been easily tired or fatigued?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'Occasionally', 'points': 1},
@@ -49,7 +53,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you been having difficulty concentrating on things, such as reading the newspaper or watching television?',
+      'question':
+          'Over the last 2 weeks, have you been having difficulty concentrating on things, such as reading the newspaper or watching television?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'Occasionally', 'points': 1},
@@ -58,7 +63,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you been so worried that you have trouble falling or staying asleep?',
+      'question':
+          'Over the last 2 weeks, have you been so worried that you have trouble falling or staying asleep?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +73,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you been irritable or on edge with people?',
+      'question':
+          'Over the last 2 weeks, have you been irritable or on edge with people?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'Occasionally', 'points': 1},
@@ -76,7 +83,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you been afraid that something awful is going to happen?',
+      'question':
+          'Over the last 2 weeks, have you been afraid that something awful is going to happen?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Occasionally', 'points': 1},
@@ -85,7 +93,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you avoided places or situations that might cause you to worry?',
+      'question':
+          'Over the last 2 weeks, have you avoided places or situations that might cause you to worry?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'Occasionally', 'points': 1},
@@ -94,7 +103,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, have you had difficulty controlling your worries that have made it hard to get things done at work, school or home?',
+      'question':
+          'Over the last 2 weeks, have you had difficulty controlling your worries that have made it hard to get things done at work, school or home?',
       'options': [
         {'option': 'Not at all', 'points': 0},
         {'option': 'To some degree', 'points': 1},
@@ -118,8 +128,12 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['AnxietyTestScore'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['AnxietyTestScore'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -166,7 +180,10 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
                       children: [
                         Text(
                           'Question ${index + 1}: ${questions[index]['question']}',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         const SizedBox(height: 10),
                         Column(
@@ -175,10 +192,12 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
                             (optionIndex) {
                               return RadioListTile<int>(
                                 title: Text(
-                                  questions[index]['options'][optionIndex]['option'],
+                                  questions[index]['options'][optionIndex]
+                                      ['option'],
                                   style: TextStyle(color: Colors.black),
                                 ),
-                                value: questions[index]['options'][optionIndex]['points'],
+                                value: questions[index]['options'][optionIndex]
+                                    ['points'],
                                 groupValue: selectedOptions[index],
                                 activeColor: Colors.black,
                                 onChanged: (value) {
@@ -223,7 +242,10 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
                 try {
                   final user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
-                    await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(user.uid)
+                        .update({
                       'AnxietyTestScore': totalScore,
                       'AnxietyDiagnosis': diagnosis,
                       'Timestamp': Timestamp.now(),
@@ -243,7 +265,8 @@ class _AnxietyTestScreenState extends State<AnxietyTestScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfilePage(testName: 'Anxiety Test'),
+                                    builder: (context) =>
+                                        ProfilePage(testName: 'Anxiety Test'),
                                   ),
                                 );
                               },

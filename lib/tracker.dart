@@ -57,7 +57,7 @@ class _TrackerPageState extends State<TrackerPage> {
               TextField(
                 controller: _medicationTimeController,
                 decoration: InputDecoration(
-                  labelText: 'Medication Time',
+                  labelText: 'Medication 1 Time',
                   border: OutlineInputBorder(),
                 ),
                 readOnly: true,

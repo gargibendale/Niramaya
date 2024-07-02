@@ -42,7 +42,7 @@ class ThirdPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => ContainerScreen()),
                   );
                 },
-                child: Text('Back to Main Screen'),
+                child: Text('Back to Home'),
               ),
             ],
           ),

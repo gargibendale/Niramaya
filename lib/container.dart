@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nirmaya/login.dart';
+import 'package:nirmaya/tracker.dart';
+import 'package:nirmaya/youtube.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'chat.dart';
 import 'diary_entry.dart';
@@ -55,12 +57,12 @@ class _ContainerScreenState extends State<ContainerScreen> {
               ),
               _buildGridButton(
                 context,
-                'Dairy Analysis',
+                'Diary Analysis',
                 DiaryEntryScreen(),
               ),
               _buildGridButton(
                 context,
-                'Guess My MOOD',
+                'Guess My Mood',
                 DetectEmotion(),
               ),
               _buildGridButton(
@@ -76,8 +78,10 @@ class _ContainerScreenState extends State<ContainerScreen> {
               _buildGridButton(
                 context,
                 'Profile Page',
-                HomeScreen(),
+                ProfilePage(testName: 'Bipolar Test'),
               ),
+              _buildGridButton(context, 'Tracker', TrackerPage()),
+              _buildGridButton(context, 'Exercises', YouTubeScreen()),
             ],
           ),
         ),

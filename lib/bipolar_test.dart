@@ -13,7 +13,8 @@ class BipolarTestScreen extends StatefulWidget {
 class _BipolarTestScreenState extends State<BipolarTestScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'Over the past 2 weeks, have you experienced a period where you felt unusually energetic or excited, with increased talkativeness or racing thoughts?',
+      'question':
+          'Over the past 2 weeks, have you experienced a period where you felt unusually energetic or excited, with increased talkativeness or racing thoughts?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -22,7 +23,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'During this period, did you need significantly less sleep than usual and feel like you didn\'t need any rest?',
+      'question':
+          'During this period, did you need significantly less sleep than usual and feel like you didn\'t need any rest?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +33,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Did you feel overly confident or have inflated self-esteem during this time?',
+      'question':
+          'Did you feel overly confident or have inflated self-esteem during this time?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -40,7 +43,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Did you become easily distracted or find it hard to focus on tasks because of your racing thoughts?',
+      'question':
+          'Did you become easily distracted or find it hard to focus on tasks because of your racing thoughts?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -49,7 +53,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Over the past 2 weeks, have you felt persistently sad, hopeless, or irritable for most of the day?',
+      'question':
+          'Over the past 2 weeks, have you felt persistently sad, hopeless, or irritable for most of the day?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -58,7 +63,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Did you experience a significant loss of interest or pleasure in most activities you used to enjoy?',
+      'question':
+          'Did you experience a significant loss of interest or pleasure in most activities you used to enjoy?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +73,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Have you had significant changes in appetite or weight (either weight loss or gain) without trying?',
+      'question':
+          'Have you had significant changes in appetite or weight (either weight loss or gain) without trying?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -76,7 +83,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'During this period, have you experienced feelings of worthlessness or excessive guilt, even over trivial matters?',
+      'question':
+          'During this period, have you experienced feelings of worthlessness or excessive guilt, even over trivial matters?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -85,7 +93,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, how often have you experienced extreme mood swings?',
+      'question':
+          'Over the last 2 weeks, how often have you experienced extreme mood swings?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -94,7 +103,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
       ],
     },
     {
-      'question': 'Over the last 2 weeks, how often have you felt overly energetic or unusually irritable?',
+      'question':
+          'Over the last 2 weeks, how often have you felt overly energetic or unusually irritable?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -118,8 +128,12 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['bipolarTestScore'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['bipolarTestScore'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -138,80 +152,88 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-     body: testTaken
+      body: testTaken
           ? Center(
               child: Text(
                 'You have already taken the Bipolar test.',
                 style: TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-            ) 
-            : ListView.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(8),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Question ${index + 1}: ${questions[index]['question']}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
-                    children: List.generate(
-                      questions[index]['options'].length,
-                      (optionIndex) {
-                        return RadioListTile<int>(
-                          title: Text(questions[index]['options'][optionIndex]['option']),
-                          value: questions[index]['options'][optionIndex]['points'],
-                          groupValue: selectedOptions[index],
-                          onChanged: (value) {
-                            setState(() {
-                              selectedOptions[index] = value!;
-                            });
-                          },
-                        );
-                      },
+            )
+          : ListView.builder(
+              itemCount: questions.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Question ${index + 1}: ${questions[index]['question']}',
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          children: List.generate(
+                            questions[index]['options'].length,
+                            (optionIndex) {
+                              return RadioListTile<int>(
+                                title: Text(questions[index]['options']
+                                    [optionIndex]['option']),
+                                value: questions[index]['options'][optionIndex]
+                                    ['points'],
+                                groupValue: selectedOptions[index],
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedOptions[index] = value!;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           int totalScore = 0;
           selectedOptions.forEach((key, value) {
             totalScore += value;
           });
-           String diagnosis;
-                if (totalScore == 0) {
-                  diagnosis = 'No Bipolar';
-                } else if (totalScore <= 4) {
-                  diagnosis = 'Minimal Bipolar';
-                } else if (totalScore <= 8) {
-                  diagnosis = 'Mild Bipolar';
-                } else if (totalScore <= 14) {
-                  diagnosis = 'Moderate Bipolar';
-                } else if (totalScore <= 20) {
-                  diagnosis = 'Moderately severe Bipolar';
-                } else {
-                  diagnosis = 'Severe Bipolar';
-                }
+          String diagnosis;
+          if (totalScore == 0) {
+            diagnosis = 'No Bipolar';
+          } else if (totalScore <= 4) {
+            diagnosis = 'Minimal Bipolar';
+          } else if (totalScore <= 8) {
+            diagnosis = 'Mild Bipolar';
+          } else if (totalScore <= 14) {
+            diagnosis = 'Moderate Bipolar';
+          } else if (totalScore <= 20) {
+            diagnosis = 'Moderately severe Bipolar';
+          } else {
+            diagnosis = 'Severe Bipolar';
+          }
 
           try {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
-              await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
+              await FirebaseFirestore.instance
+                  .collection('Users')
+                  .doc(user.uid)
+                  .update({
                 'bipolarTestScore': totalScore,
-                 'bipolarDiagnosis': diagnosis,
+                'bipolarDiagnosis': diagnosis,
                 'timestamp': Timestamp.now(),
               });
 
@@ -228,7 +250,8 @@ class _BipolarTestScreenState extends State<BipolarTestScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProfilePage(testName: 'Bipolar Test'),
+                              builder: (context) =>
+                                  ProfilePage(testName: 'Bipolar Test'),
                             ),
                           );
                         },

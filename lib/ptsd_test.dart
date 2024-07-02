@@ -13,7 +13,8 @@ class PTSDTestScreen extends StatefulWidget {
 class _PTSDTestScreenState extends State<PTSDTestScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'Do you have repeated nightmares or flashbacks about the traumatic event?',
+      'question':
+          'Do you have repeated nightmares or flashbacks about the traumatic event?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -22,7 +23,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you experience intense emotional distress or physical reactions (sweating, rapid heart rate) when reminded of the event?',
+      'question':
+          'Do you experience intense emotional distress or physical reactions (sweating, rapid heart rate) when reminded of the event?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -31,7 +33,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you avoid places, people, or situations that remind you of the traumatic event?',
+      'question':
+          'Do you avoid places, people, or situations that remind you of the traumatic event?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -40,7 +43,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you find it difficult to talk about the traumatic event or anything related to it?',
+      'question':
+          'Do you find it difficult to talk about the traumatic event or anything related to it?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -49,7 +53,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you have difficulty remembering important aspects of the traumatic event?',
+      'question':
+          'Do you have difficulty remembering important aspects of the traumatic event?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -58,7 +63,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you have negative beliefs about yourself or the world as a result of the trauma (e.g., feeling worthless, believing the world is dangerous)?',
+      'question':
+          'Do you have negative beliefs about yourself or the world as a result of the trauma (e.g., feeling worthless, believing the world is dangerous)?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -67,7 +73,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you experience a persistent inability to experience positive emotions (anhedonia)?',
+      'question':
+          'Do you experience a persistent inability to experience positive emotions (anhedonia)?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -76,7 +83,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you feel constantly on edge or hypervigilant, scanning your surroundings for danger?',
+      'question':
+          'Do you feel constantly on edge or hypervigilant, scanning your surroundings for danger?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -85,7 +93,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you have trouble sleeping or staying asleep due to intrusive thoughts or nightmares?',
+      'question':
+          'Do you have trouble sleeping or staying asleep due to intrusive thoughts or nightmares?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -94,7 +103,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
       ],
     },
     {
-      'question': 'Do you experience exaggerated startle responses or irritability or outbursts of anger?',
+      'question':
+          'Do you experience exaggerated startle responses or irritability or outbursts of anger?',
       'options': [
         {'option': 'Never', 'points': 0},
         {'option': 'Sometimes', 'points': 1},
@@ -118,8 +128,12 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final docSnapshot = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
-        if (docSnapshot.exists && docSnapshot.data()!['PTSDTestScore'] != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+        if (docSnapshot.exists &&
+            docSnapshot.data()!['PTSDTestScore'] != null) {
           setState(() {
             testTaken = true;
           });
@@ -159,7 +173,10 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
                       children: [
                         Text(
                           'Question ${index + 1}: ${questions[index]['question']}',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
                         ),
                         const SizedBox(height: 10),
                         Column(
@@ -167,8 +184,10 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
                             questions[index]['options'].length,
                             (optionIndex) {
                               return RadioListTile<int>(
-                                title: Text(questions[index]['options'][optionIndex]['option']),
-                                value: questions[index]['options'][optionIndex]['points'],
+                                title: Text(questions[index]['options']
+                                    [optionIndex]['option']),
+                                value: questions[index]['options'][optionIndex]
+                                    ['points'],
                                 groupValue: selectedOptions[index],
                                 onChanged: (value) {
                                   setState(() {
@@ -212,15 +231,19 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
                 try {
                   final user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
-                    final docRef = FirebaseFirestore.instance.collection('Users').doc(user.uid);
+                    final docRef = FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(user.uid);
 
                     // Fetch the existing document to preserve other test results
                     final docSnapshot = await docRef.get();
-                    Map<String, dynamic>? existingData = docSnapshot.data() as Map<String, dynamic>?;
+                    Map<String, dynamic>? existingData =
+                        docSnapshot.data() as Map<String, dynamic>?;
 
                     // Update the document with PTSD test result while preserving other test results
                     await docRef.set({
-                      if (existingData != null) ...existingData, // Spread the existing data if not null
+                      if (existingData != null)
+                        ...existingData, // Spread the existing data if not null
                       'PTSDTestScore': totalScore,
                       'PTSDDiagnosis': diagnosis,
                       'PTSDTestTimestamp': Timestamp.now(),
@@ -231,7 +254,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Test Result'),
-                          content: Text('Total Score: $totalScore\nDiagnosis: $diagnosis'),
+                          content: Text(
+                              'Total Score: $totalScore\nDiagnosis: $diagnosis'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -239,7 +263,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfilePage(testName: 'PTSD Test'),
+                                    builder: (context) =>
+                                        ProfilePage(testName: 'PTSD Test'),
                                   ),
                                 );
                               },
@@ -251,7 +276,8 @@ class _PTSDTestScreenState extends State<PTSDTestScreen> {
                     );
 
                     setState(() {
-                      testTaken = true; // Update the flag to indicate the test has been taken
+                      testTaken =
+                          true; // Update the flag to indicate the test has been taken
                     });
                   } else {
                     showDialog(
