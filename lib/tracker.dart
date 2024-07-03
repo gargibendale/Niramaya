@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nirmaya/notify_service.dart';
+import 'package:niramaya/notify_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() {

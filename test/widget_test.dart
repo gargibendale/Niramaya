@@ -9,15 +9,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:nirmaya/main.dart';
+import 'package:niramaya/main.dart';
+
 Future<FirebaseApp> mockFirebaseInitialization() async {
   // You can use Firebase.initializeApp() or a mock implementation
   return Firebase.initializeApp();
 }
+
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-     // Prepare a mock Firebase initialization
+    // Prepare a mock Firebase initialization
     final Future<FirebaseApp> initialization = mockFirebaseInitialization();
 
     // Build our app with the required initialization parameter

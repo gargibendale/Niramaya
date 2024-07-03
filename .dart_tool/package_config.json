@@ -842,13 +842,13 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "nirmaya",
+      "name": "niramaya",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-06-30T14:05:26.882929Z",
+  "generated": "2024-07-03T17:45:46.450992Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/Users/hp/Downloads/flutter",

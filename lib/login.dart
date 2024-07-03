@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nirmaya/reg.dart'; // Ensure this path is correct
+import 'package:niramaya/reg.dart'; // Ensure this path is correct
 import 'firstpage.dart'; // Add this import
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';

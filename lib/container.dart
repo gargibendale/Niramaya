@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nirmaya/login.dart';
-import 'package:nirmaya/tracker.dart';
-import 'package:nirmaya/youtube.dart';
+import 'package:niramaya/login.dart';
+import 'package:niramaya/tracker.dart';
+import 'package:niramaya/youtube.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'chat.dart';
 import 'diary_entry.dart';
@@ -41,7 +41,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
         child: Icon(Icons.logout_sharp),
       ),
       body: Container(
-        color: Color(0xFFFFF9C4), // Set background color
+        color: Color(0xFFFFF8DB), // Set background color
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: GridView.count(

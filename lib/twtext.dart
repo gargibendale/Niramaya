@@ -1,23 +1,24 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
-class TypewriterText extends StatefulWidget {
+class TypewriterMarkdown extends StatefulWidget {
   final String text;
-  final TextStyle? textStyle;
+  final MarkdownStyleSheet? styleSheet;
   final Duration duration;
 
-  const TypewriterText({
+  const TypewriterMarkdown({
     Key? key,
     required this.text,
-    this.textStyle,
+    this.styleSheet,
     this.duration = const Duration(milliseconds: 30),
   }) : super(key: key);
 
   @override
-  _TypewriterTextState createState() => _TypewriterTextState();
+  _TypewriterMarkdownState createState() => _TypewriterMarkdownState();
 }
 
-class _TypewriterTextState extends State<TypewriterText> {
+class _TypewriterMarkdownState extends State<TypewriterMarkdown> {
   String _displayedText = "";
   int _currentIndex = 0;
   Timer? _timer;
@@ -49,9 +50,9 @@ class _TypewriterTextState extends State<TypewriterText> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _displayedText,
-      style: widget.textStyle,
+    return MarkdownBody(
+      data: _displayedText,
+      styleSheet: widget.styleSheet,
     );
   }
 }

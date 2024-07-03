@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nirmaya/container.dart';
+import 'package:niramaya/container.dart';
 
 class ProfilePage extends StatelessWidget {
   final String testName;
@@ -59,8 +59,11 @@ class ProfilePage extends StatelessWidget {
           }
           print('Fetched user data: $data');
 
-          String email = 'gargi.b@somaiya.edu';
-          String fullName = 'Gargi Bendale';
+          String email = data['email'] ?? 'No email available';
+          String firstName = data['firstName'] ?? 'No first name available';
+          String lastName = data['lastName'] ?? 'No last name available';
+
+          String fullName = firstName + ' ' + lastName;
 
           // Fetch test details
           int anxietyTestScore = data['AnxietyTestScore'] ?? 0;
@@ -86,8 +89,16 @@ class ProfilePage extends StatelessWidget {
             child: ListView(
               children: [
                 // Display the uploaded image
-                Image.asset(
-                    'assets/profile.png'), // Make sure to add this asset in pubspec.yaml
+                CircleAvatar(
+                  radius: 55,
+                  backgroundColor: Color.fromARGB(255, 97, 0, 0),
+                  foregroundColor: Colors.white,
+                  child: Center(
+                    child: Text(firstName[0],
+                        style: TextStyle(
+                            fontSize: 55, fontWeight: FontWeight.bold)),
+                  ),
+                ), // Make sure to add this asset in pubspec.yaml
 
                 const SizedBox(height: 20),
 
@@ -127,7 +138,7 @@ class ProfilePage extends StatelessWidget {
                           builder: (context) => ContainerScreen()),
                     );
                   },
-                  child: const Text('Go to Home'),
+                  child: const Text('Home'),
                 ),
               ],
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:nirmaya/consts.dart';
-import 'package:nirmaya/twtext.dart';
+import 'package:niramaya/consts.dart';
+import 'package:niramaya/twtext.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -100,8 +100,15 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: DecoratedBox(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/chatbg6.jpg"), fit: BoxFit.cover)),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 255, 254, 211), // Start color
+              Color.fromARGB(255, 187, 233, 255), // End color
+            ],
+          ),
+        ),
         child: Column(
           children: [
             Expanded(
@@ -136,9 +143,11 @@ class _ChatPageState extends State<ChatPage> {
                                         color: const Color.fromARGB(
                                             255, 37, 21, 65)),
                                   )
-                                : TypewriterText(
+                                : TypewriterMarkdown(
                                     text: message,
-                                    textStyle: TextStyle(color: Colors.black),
+                                    styleSheet: MarkdownStyleSheet(
+                                      p: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                           ),
                         ),

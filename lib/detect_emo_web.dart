@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +23,8 @@ class _DetectEmotionState extends State<DetectEmotion> {
     },
     {
       'emotion': 'happy',
-      'question': 'You see a funny animal video online and laugh out loud. '
+      'question':
+          'Your friend that you had a fight with sent you a funny animal video online. '
     },
     {
       'emotion': 'happy',
