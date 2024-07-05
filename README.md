@@ -1,7 +1,7 @@
 # निरामय
 
 ## free from illness.
-Niramaya is a mental health assistant and monitor app that becomes a virtual therapy assistant for you and also creates an in-depth mental health report for you. Apart from this there are several diagnosis tests which help you determine the severity of your mental illness. 
+Niramaya is a mental health assistant and monitor app that becomes a virtual therapy assistant for you and also creates an in-depth mental health report for you. Apart from this there are several diagnosis tests which help you determine your mental illness. 
 
 ## Getting Started
 
@@ -31,8 +31,8 @@ Hackathon Link: [Prasunethon 2024](https://unstop.com/hackathons/prasunethon-pra
 We decided to design an app that conquers the social stigma associated with mental health by bringing to you a friendly neighborhood virtual therapy assistant named Dawn. Apart from this, it also has these features:
 
 * Diary analysis to give mental health report
-* Diagnosis tests to determine the severity of your specific illness which save time and energy of commuting to a mental health clinic
-* Guess my mood game which calculates your average mood by detecting your facial emotions to various scenarios (Side note: This feature currently only works when I run the django emotion recognition server on my local machine. The repository for this can be found [here](https://github.com/gargibendale/face_recognition_api))
+* Diagnosis tests to determine the your specific illness which save time and energy of commuting to a mental health clinic
+* Guess my mood game which calculates your average mood by detecting your emotions to various scenarios (Side note: This feature currently only works when I run the django server on my local machine. The repository for this can be found [here](https://github.com/gargibendale/face_recognition_api))
 * Helpline numbers and links to mental health foundations from all over India
 * A medicine and sleep time tracker which notifies you to take the medications at set time
 * Links to various mental health exercises
