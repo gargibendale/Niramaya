@@ -1,6 +1,5 @@
 # निरामय
 
-## free from illness.
 Niramaya is a mental health assistant and monitor app that becomes a virtual therapy assistant for you and also creates an in-depth mental health report for you. Apart from this there are several diagnosis tests which help you determine your mental illness. 
 
 ## Getting Started
